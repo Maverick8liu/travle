@@ -1,0 +1,51 @@
+package com.hg.hgc.web.dao;
+
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.core.generic.GenericDao;
+import com.hg.hgc.web.model.User;
+import com.hg.hgc.web.model.UserExample;
+import com.hg.hgc.web.model.UserGroup;
+import com.hg.hgc.web.model.UserGroupExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * 用户组数据处理层
+ * @author liuguoyu
+ *
+ * @since 2016年4月26日下午3:29:54
+ */
+public interface UserGroupMapper extends GenericDao<UserGroup, Integer> {
+    int countByExample(UserGroupExample example);
+
+    int deleteByExample(UserGroupExample example);
+
+    int deleteByPrimaryKey(Integer groupid);
+
+    int insert(UserGroup record);
+
+    int insertSelective(UserGroup record);
+
+    List<UserGroup> selectByExample(UserGroupExample example);
+    
+    List<UserGroup> selectByExampleByOne(UserGroupExample example);
+
+    UserGroup selectByPrimaryKey(Integer groupid);
+
+    int updateByExampleSelective(@Param("record") UserGroup record, @Param("example") UserGroupExample example);
+
+    int updateByExample(@Param("record") UserGroup record, @Param("example") UserGroupExample example);
+
+    int updateByPrimaryKeySelective(UserGroup record);
+
+    int updateByPrimaryKey(UserGroup record);
+    
+    /**
+     * 分页条件查询
+     * 
+     * @param page
+     * @param example
+     * @return
+     */
+    List<UserGroup> selectByExampleAndPage(Page<UserGroup> page, UserGroupExample example);
+}

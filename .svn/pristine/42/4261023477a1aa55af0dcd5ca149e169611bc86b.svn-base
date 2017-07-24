@@ -1,0 +1,42 @@
+package com.hg.hgc.web.model;
+
+/**
+ * 用户组实体model
+ * @author lyj
+ *
+ * @since 2016年4月26日下午2:22:18
+ */
+public class UserGroup {
+	
+    private Integer groupid;
+
+    private String groupname;
+
+    public UserGroup(){}
+    
+    public UserGroup(Integer groupid,String groupname){
+    	this.groupid = groupid;
+    	this.groupname = groupname;
+    }
+    
+    public Integer getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(Integer groupid) {
+        this.groupid = groupid;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+    
+    @Override
+    public String toString(){
+    	return "UserGroup [id="+groupid+",groupname="+groupname+"]";
+    }
+}

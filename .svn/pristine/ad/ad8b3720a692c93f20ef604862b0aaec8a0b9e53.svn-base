@@ -1,0 +1,94 @@
+package com.hg.hgc.web.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.baomidou.kisso.annotation.Action;
+import com.baomidou.kisso.annotation.Login;
+import com.baomidou.kisso.annotation.Permission;
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.web.model.Menu;
+import com.hg.hgc.web.service.MenuService;
+
+/**
+ * 菜单控制单元
+ * @author liuguoyu
+ *
+ * @since 2016年4月26日下午5:07:44
+ */
+
+@Controller
+@RequestMapping(value = "/menu")
+public class MenuController {
+	
+	@Resource
+	MenuService menuService;
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "toMenuInsert",method = RequestMethod.GET)
+	public String toMenuInsert(){
+		return "menu_insert";
+	}
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "menuInsert")
+	@Permission("menuInsert")
+	public String menuInsert(Model model,Menu record){
+		return "redirect:/menuList";
+	}
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "toMenuModify")
+	public String toMenuModify(Model model,Menu record,HttpServletRequest request){
+		//调用逻辑层，查询数据
+		Menu menu = menuService.selectById(record.getMenuid());
+		//判断数据是否存在
+		if(menu != null){
+			request.setAttribute("menuModify", menu);
+		}else{
+			request.setAttribute("errorMessage", "查询信息不存在！");
+		}
+		return "menu_modify";
+	}
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value="menuModify",method = RequestMethod.POST)
+	public String menuModify(Model model,Menu record){
+		
+		int i = menuService.update(record);
+		System.out.println("menuModify update return info: "+i);
+		
+		return "redirect:/menuList";
+	}
+	
+	/**
+	 * Ajax 处理异步进行删除数据
+	 * @return
+	 */
+	@RequestMapping("delMenu")
+	@Permission("delMenu")
+	public String delete(){
+		return "menu_delete";
+	}
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "/menuList",method = RequestMethod.GET)
+	public String viewList(Model model,HttpServletRequest request){
+		
+		Page<Menu> page = new Page<Menu>(1,10);
+		page.setTotalCount(10);
+		
+		List<Menu> list = menuService.selectByExampleAndPage(page, null);
+		request.setAttribute("menuList", list);
+		return "menu_list";
+	}
+	
+	
+}

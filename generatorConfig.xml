@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <context id="context1" >
+    <jdbcConnection 
+    	driverClass="com.mysql.jdbc.Driver" 
+    	connectionURL="jdbc:mysql://localhost:3306/travelData" 
+    	userId="root" 
+    	password="1234" />
+    
+    <javaModelGenerator targetPackage="com.hg.hgc.web.model" targetProject="travel/src/main/java" />
+    
+    <sqlMapGenerator targetPackage="com.hg.hgc.web.dao" targetProject="travel/src/main/java" />
+    
+    <javaClientGenerator targetPackage="com.hg.hgc.web.dao" targetProject="travel/src/main/java" type="XMLMAPPER" />
+    
+    <!-- <table schema="" tableName="user" domainObjectName="User">
+      
+    </table> -->
+    <table schema="" tableName="custom" domainObjectName="Custom"></table>
+   <!--  <table schema="" tableName="custom_flow" domainObjectName="CustomFlow"></table>
+    <table schema="" tableName="guide_detail" domainObjectName="GuideDetail"></table>
+    <table schema="" tableName="guide_service" domainObjectName="GuideService"></table>
+    <table schema="" tableName="home_activitie" domainObjectName="HomeActivitie"></table>
+   <table schema="" tableName="project_image" domainObjectName="ProjectImage"></table>
+    <table schema="" tableName="user" domainObjectName="User"></table> -->
+     <!--<table schema="" tableName="role" domainObjectName="Role">
+      
+    </table>
+     <table schema="" tableName="userrole" domainObjectName="UserRole">
+      
+    </table>
+    <table schema="" tableName="menu" domainObjectName="Menu">
+      
+    </table> -->
+  <!--   <table schema="" tableName="customer" domainObjectName="Customer">
+      
+    </table> -->
+  </context>
+</generatorConfiguration>

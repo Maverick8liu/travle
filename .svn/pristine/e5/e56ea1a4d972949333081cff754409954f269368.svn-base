@@ -1,0 +1,47 @@
+package com.hg.hgc.test.service;
+
+import java.util.Date;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.hg.hgc.core.feature.test.TestSupport;
+import com.hg.hgc.core.util.ApplicationUtils;
+import com.hg.hgc.web.model.User;
+import com.hg.hgc.web.service.UserService;
+
+@RunWith(SpringJUnit4ClassRunner.class)		//表示继承了SpringJUnit4ClassRunner类
+@ContextConfiguration(locations = {"classpath:mybatis-config.xml"})
+public class UserServiceTest extends TestSupport {
+	private static Logger logger = Logger.getLogger(UserServiceTest.class);
+
+    @Resource
+    private UserService userService;
+
+    @Test
+    public void test_insert() {
+        User model = new User();
+        model.setUsername("smile_pengbin");
+        model.setPassword(ApplicationUtils.sha256Hex("123456"));
+        model.setCreateTime(new Date());
+        userService.insert(model);
+        logger.info("插入成功");
+    }
+
+    //@Test
+    public void test_10insert() {
+        for (int i = 0; i < 10; i++) {
+            User model = new User();
+            model.setUsername("smile_pengbin" + i);
+            model.setPassword(ApplicationUtils.sha256Hex("123456"));
+            model.setCreateTime(new Date());
+            userService.insert(model);
+        }
+    }
+
+}

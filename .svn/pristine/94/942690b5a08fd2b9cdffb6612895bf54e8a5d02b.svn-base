@@ -1,0 +1,68 @@
+package com.hg.hgc.web.dao;
+
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.core.generic.GenericDao;
+import com.hg.hgc.web.model.Menu;
+import com.hg.hgc.web.model.Role;
+import com.hg.hgc.web.model.RoleExample;
+import com.hg.hgc.web.model.UserExample;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * 角色dao接口
+ * @author lyj
+ *
+ * @since 2016年4月26日上午10:56:44
+ */
+public interface RoleMapper extends GenericDao<Role, Integer>{
+   
+    int countByExample(RoleExample example);
+
+    
+    int deleteByExample(RoleExample example);
+
+    
+    int deleteByPrimaryKey(Integer roleid);
+
+    
+    int insert(Role record);
+
+    
+    int insertSelective(Role record);
+
+   
+    List<Role> selectByExample(RoleExample example);
+
+   
+    Role selectByPrimaryKey(Integer roleid);
+
+   
+    int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
+
+    
+    int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);
+
+    
+    int updateByPrimaryKeySelective(Role record);
+
+    
+    int updateByPrimaryKey(Role record);
+    
+    /**
+     * 通过用户id 查询用户 拥有的角色
+     * 
+     * @param id
+     * @return
+     */
+    List<Role> selectRolesByUserId(Integer userId);
+    /**
+     * 分页条件查询
+     * 
+     * @param page
+     * @param example
+     * @return
+     */
+    List<Role> selectByExampleAndPage(Page<Role> page, RoleExample example);
+}

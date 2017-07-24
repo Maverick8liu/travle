@@ -1,0 +1,71 @@
+package com.hg.hgc.web.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.HttpSessionRequiredException;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.baomidou.kisso.SSOHelper;
+import com.baomidou.kisso.SSOToken;
+import com.baomidou.kisso.annotation.Action;
+import com.baomidou.kisso.annotation.Login;
+
+/**
+ * 视图控制器,返回jsp视图给前端
+ * 
+ * @author smile_pengbin
+ * @since 2014年5月28日 下午4:00:49
+ **/
+@Controller
+@RequestMapping("/rest")
+public class PageController {
+
+    /**
+     * 登录页
+     */
+	@Login(action = Action.Skip)
+    @RequestMapping("/login")
+    public String login(HttpServletRequest request) {
+		SSOToken st = SSOHelper.getToken(request);
+		if (st != null) {
+			return "index";
+		}
+        return "login";
+    }
+
+    /**
+     * dashboard页
+     */
+    @RequestMapping("/dashboard")
+    public String dashboard() {
+    	System.out.println("dashboard");
+        return "dashboard";
+    }
+
+    /**
+     * 404页
+     */
+    @RequestMapping("/404")
+    public String error404() {
+        return "404";
+    }
+
+    /**
+     * 401页
+     */
+    @RequestMapping("/401")
+    public String error401() {
+        return "401";
+    }
+
+    /**
+     * 500页
+     */
+    @RequestMapping("/500")
+    public String error500() {
+        return "500";
+    }
+
+  
+}

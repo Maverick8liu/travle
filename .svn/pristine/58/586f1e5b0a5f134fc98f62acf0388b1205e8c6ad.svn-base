@@ -1,0 +1,29 @@
+package com.hg.hgc.web.service;
+
+import com.hg.hgc.core.generic.GenericService;
+import com.hg.hgc.web.model.User;
+
+/**
+ * 用户 业务 接口
+ * 
+ * @author smile_pengbin
+ * @since 2014年7月5日 上午11:53:33
+ **/
+public interface UserService extends GenericService<User, Integer> {
+
+    /**
+     * 用户验证
+     * 
+     * @param user
+     * @return
+     */
+    User authentication(User user);
+
+    /**
+     * 根据用户名查询用户
+     * 
+     * @param username
+     * @return
+     */
+    User selectByUsername(String username);
+}

@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>菜单</title>
+<style type="text/css">
+.tdin{word-wrap:break-word;width: 200px;}
+</style>
+
+<script type="text/javascript" src="<%=basePath %>app/js/main-content.js"></script>
+  
+</head>
+<body>
+<form action="insertMenu" method="post">
+<table id="menu">
+	<tr>
+		<th style="text-align:center;" >菜单名</th>
+		<th style="text-align:center;" >菜单编码</th>
+		<th style="text-align:center;" >父菜单编码</th>
+		<th style="text-align:center;" >菜单级别</th>
+		<th style="text-align:center;" >是否有子菜单</th>
+		<th style="text-align:center;" >菜单状态</th>
+		<th style="text-align:center;" >操作</th>
+	<tr>
+	<c:forEach items="${requestScope.menuList }" var="row">
+		<tr>
+		<td align="center" class="tdin">${row.menuname }</td>
+		<td align="center" class="tdin">${row.menucode }</td>
+		<td align="center" class="tdin">${row.parentmenucode }</td>
+		<td align="center" class="tdin">${row.menulevel }</td>
+		<td align="center" class="tdin">
+			<c:if test="${row.isleaf == 1 }">有</c:if>
+			<c:if test="${row.isleaf == 0 }">无</c:if>
+		</td>
+		<td align="center" class="tdin">
+			<c:if test="${row.status == 1 }">启用</c:if>
+			<c:if test="${row.status == 0 }">禁用</c:if>
+		</td>
+		<td align="center" class="tdin">
+		<a class="herfContent" href="rest/menu/toMenuModify?menuid=${row.menuid }" target="iframe1" >修改</a>
+		<a class="herfContent" href="">删除</a>
+			
+		</td>
+		</tr>
+	</c:forEach>
+	
+	
+	
+</table>
+</form>
+</body>
+</html>

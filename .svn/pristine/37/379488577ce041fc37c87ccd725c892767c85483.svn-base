@@ -1,0 +1,48 @@
+package com.hg.hgc.web.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.core.generic.GenericDao;
+import com.hg.hgc.core.generic.GenericServiceImpl;
+import com.hg.hgc.web.dao.UserRoleMapper;
+import com.hg.hgc.web.model.UserRole;
+import com.hg.hgc.web.model.UserRoleExample;
+import com.hg.hgc.web.service.UserRoleService;
+
+@Service
+public class UserRoleServiceImpl extends GenericServiceImpl<UserRole, Integer> implements UserRoleService{
+	
+	@Resource
+	UserRoleMapper userRoleMappler;
+	
+	@Override
+	public List<UserRole> selectByUserId(Integer userid) {
+		// TODO Auto-generated method stub
+		return userRoleMappler.selectByUserId(userid);
+	}
+
+	@Override
+	public List<UserRole> selectByExampleAndPage(Page<UserRole> page, UserRoleExample example) {
+		// TODO Auto-generated method stub
+		return userRoleMappler.selectByExampleAndPage(page, example);
+	}
+
+	@Override
+	public UserRole selecByExampleByOne(UserRoleExample example) {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
+
+	@Override
+	public GenericDao<UserRole, Integer> getDao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

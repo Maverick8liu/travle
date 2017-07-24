@@ -1,0 +1,167 @@
+package com.hg.hgc.web.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.kisso.annotation.Action;
+import com.baomidou.kisso.annotation.Login;
+import com.baomidou.kisso.annotation.Permission;
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.web.model.Menu;
+import com.hg.hgc.web.service.MenuService;
+
+/**
+ * 菜单控制单元
+ * @author liuguoyu
+ *
+ * @since 2016年4月26日下午5:07:44
+ */
+
+@Controller
+@RequestMapping(value = "/menu")
+public class MenuController {
+	
+	@Resource
+	MenuService menuService;
+	
+	/**
+	 * 跳转到添加的页面
+	 * @return
+	 */
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "/toMenuInsert",method = RequestMethod.GET)
+	public String toMenuInsert(){
+		return "menu/menu_insert";
+	}
+	
+	@Login(action = Action.Skip)
+	@ResponseBody
+	@RequestMapping(value = "/menuInsert",method = RequestMethod.POST)
+	@Permission("menuInsert")
+	public String menuInsert(Model model,Menu record,HttpServletRequest request){
+		int i = menuService.insert(record);
+		System.out.println("menuService menuInsert return infomation is "+i);
+		//封装返回的json对象
+		JSONObject json = new JSONObject();
+		if(i == 1){
+			//封装返回成功的对象 "callbackType","closeCurrent"
+			json.put("statusCode", 200);
+			json.put("message","操作成功");
+			json.put("navTabId", "menuManager");
+			json.put("rel", "");
+			json.put("callbackType","closeCurrent");
+			json.put("forwardUrl","http://sso.test.com/rest/menu/menuList");
+		}else{
+			json.put("statusCode", 300);
+			json.put("message","操作失败");
+			
+		}
+		return json.toJSONString();
+	}
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "/toMenuModify")
+	public String toMenuModify(Model model,Menu record,HttpServletRequest request){
+		//调用逻辑层，查询数据
+		Menu menu = menuService.selectById(record.getMenuid());
+		//判断数据是否存在
+		if(menu != null){
+			request.setAttribute("menuModify", menu);
+		}else{
+			request.setAttribute("errorMessage", "查询信息不存在！");
+		}
+		return "menu/menu_modify";
+	}
+	
+	@Login(action = Action.Skip)
+	@ResponseBody
+	@RequestMapping(value="/menuModify",method = RequestMethod.POST)
+	public String menuModify(Model model,Menu record,HttpServletRequest request){
+		
+		int i = menuService.update(record);
+		System.out.println("menuModify update return info: "+i);
+		//封装返回的json对象
+		JSONObject json = new JSONObject();
+		if(i == 1){
+			//封装返回成功的对象 "callbackType","closeCurrent"
+			json.put("statusCode", 200);
+			json.put("message","操作成功");
+			json.put("navTabId", "menuManager");
+			json.put("rel", "");
+			json.put("callbackType","closeCurrent");
+			json.put("forwardUrl","http://sso.test.com/rest/menu/menuList");
+		}else{
+			json.put("statusCode", 300);
+			json.put("message","操作失败");
+			
+		}
+		return json.toJSONString();
+		
+	}
+	
+	/**
+	 * Ajax 处理异步进行删除数据
+	 * @return
+	 */
+	@Login(action = Action.Skip)
+	@ResponseBody
+	@RequestMapping(value = "/delMenu")
+	public String delMenu(Model model,Menu record){
+		JSONObject json = new JSONObject();;
+		try {
+			int i = menuService.delete(record.getMenuid());
+			
+			if(i == 1){
+				//封装返回成功的对象 "callbackType","closeCurrent"
+				json.put("statusCode", 200);
+				json.put("message","删除成功");
+				json.put("navTabId", "menuManager");
+				json.put("rel", "");
+				json.put("callbackType","");
+				json.put("forwardUrl","");
+			}else{
+				json.put("statusCode", 300);
+				json.put("message","删除失败");
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			json.put("statusCode", 300);
+			json.put("message","删除失败");
+			
+		}
+		System.out.println(json.toJSONString());
+		return json.toJSONString();
+	}
+	
+	
+	
+	
+	@Login(action = Action.Skip)
+	@RequestMapping(value = "/menuList")
+	public String viewList(Model model,Page<Menu> record,HttpServletRequest request){
+		
+		int totalCount = menuService.countByExample(null);
+		Page<Menu> page = new Page<Menu>(record.getPageNum(),record.getNumPerPage());
+		
+		page.setTotalCount(totalCount);
+		
+		
+		List<Menu> list = menuService.selectByExampleAndPage(page, null);
+		request.setAttribute("menuList", list);
+		request.setAttribute("menuPage", page);
+		return "menu/menu_list";
+	}
+	
+	
+}

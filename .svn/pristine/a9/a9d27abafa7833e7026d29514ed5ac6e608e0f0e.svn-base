@@ -1,0 +1,51 @@
+package com.hg.hgc.web.dao;
+
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.core.generic.GenericDao;
+import com.hg.hgc.web.model.Menu;
+import com.hg.hgc.web.model.UserExample;
+import com.hg.hgc.web.model.UserRole;
+import com.hg.hgc.web.model.UserRoleExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * 用户角色数据处理层
+ * @author liuguoyu
+ *
+ * @since 2016年4月26日下午4:25:40
+ */
+public interface UserRoleMapper extends GenericDao<UserRole, Integer>{
+    int countByExample(UserRoleExample example);
+
+    int deleteByExample(UserRoleExample example);
+
+    int deleteByPrimaryKey(Integer userroleid);
+
+    int insert(UserRole record);
+
+    int insertSelective(UserRole record);
+
+    List<UserRole> selectByExample(UserRoleExample example);
+
+    UserRole selectByPrimaryKey(Integer userroleid);
+
+    int updateByExampleSelective(@Param("record") UserRole record, @Param("example") UserRoleExample example);
+    
+    int updateByExample(@Param("record") UserRole record, @Param("example") UserRoleExample example);
+  
+    int updateByPrimaryKeySelective(UserRole record);
+
+    int updateByPrimaryKey(UserRole record);
+    
+    List<UserRole> selectByUserId(Integer userid);
+    
+    /**
+     * 分页条件查询
+     * 
+     * @param page
+     * @param example
+     * @return
+     */
+    List<UserRole> selectByExampleAndPage(Page<UserRole> page, UserRoleExample example);
+}

@@ -1,0 +1,35 @@
+package com.hg.hgc.web.service.impl;
+
+import java.util.List;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import com.hg.hgc.core.generic.GenericDao;
+import com.hg.hgc.core.generic.GenericServiceImpl;
+import com.hg.hgc.web.dao.PermissionMapper;
+import com.hg.hgc.web.model.Permission;
+import com.hg.hgc.web.service.PermissionService;
+
+/**
+ * 权限Service实现类
+ *
+ * @author smile_pengbin
+ * @since 2014年6月10日 下午12:05:03
+ */
+@Service
+public class PermissionServiceImpl extends GenericServiceImpl<Permission, Long> implements PermissionService {
+
+    @Resource
+    private PermissionMapper permissionMapper;
+
+
+    @Override
+    public GenericDao<Permission, Long> getDao() {
+        return permissionMapper;
+    }
+
+    @Override
+    public List<Permission> selectPermissionsByRoleId(Long roleId) {
+        return permissionMapper.selectPermissionsByRoleId(roleId);
+    }
+}

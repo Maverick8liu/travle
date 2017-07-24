@@ -1,0 +1,30 @@
+package com.hg.hgc.web.service;
+
+import java.util.List;
+
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.core.generic.GenericService;
+import com.hg.hgc.web.model.UserRole;
+import com.hg.hgc.web.model.UserRoleExample;
+
+/**
+ * 用户角色业务处理类
+ * @author liuguoyu
+ *
+ * @since 2016年4月26日下午2:57:30
+ */
+public interface UserRoleService extends GenericService<UserRole, Integer>{
+	
+	List<UserRole> selectByUserId(Integer userid);
+
+	/**
+	 * 分页查询
+	 * @param page
+	 * @param example
+	 * @return
+	 */
+	 List<UserRole> selectByExampleAndPage(Page<UserRole> page, UserRoleExample example);
+	
+	 @Deprecated
+	 UserRole selecByExampleByOne(UserRoleExample example);
+}

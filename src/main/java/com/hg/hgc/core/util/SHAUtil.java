@@ -1,0 +1,45 @@
+package com.hg.hgc.core.util;
+
+import java.security.MessageDigest;
+
+/**
+ * SHA密码加密算法工具类
+ * @author liuguoyu
+ *
+ * @since 2016年5月5日下午2:52:19
+ */
+public class SHAUtil {
+	 public static String shaEncode(String inStr) throws Exception {
+	        MessageDigest sha = null;
+	        try {
+	            sha = MessageDigest.getInstance("SHA");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "";
+	        }
+
+	        byte[] byteArray = inStr.getBytes("UTF-8");
+	        byte[] md5Bytes = sha.digest(byteArray);
+	        StringBuffer hexValue = new StringBuffer();
+	        for (int i = 0; i < md5Bytes.length; i++) {
+	            int val = ((int) md5Bytes[i]) & 0xff;
+	            if (val < 16) { 
+	                hexValue.append("0");
+	            }
+	            hexValue.append(Integer.toHexString(val));
+	        }
+	        return hexValue.toString();
+	    }
+	 
+	 /**
+	     * 测试主函数
+	     * @param args
+	     * @throws Exception
+	     */
+	    public static void main(String args[]) throws Exception {
+	        String str = new String("123456");
+	        System.out.println("原始：" + str);
+	        System.out.println("SHA后：" + shaEncode(str).length());
+	        System.out.println("SHA后：" + shaEncode(str));
+	    }
+}

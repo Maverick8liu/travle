@@ -1,0 +1,79 @@
+package com.hg.hgc.web.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.hg.hgc.core.feature.orm.mybatis.Page;
+import com.hg.hgc.core.generic.GenericDao;
+import com.hg.hgc.core.generic.GenericServiceImpl;
+import com.hg.hgc.web.dao.UserGroupMapper;
+import com.hg.hgc.web.model.User;
+import com.hg.hgc.web.model.UserExample;
+import com.hg.hgc.web.model.UserGroup;
+import com.hg.hgc.web.model.UserGroupExample;
+import com.hg.hgc.web.service.UserGroupService;
+
+/**
+ * 
+ * @author liuguoyu
+ *
+ * @since 2016年4月26日下午3:04:23
+ */
+@Service
+public class UserGroupServiceImpl extends GenericServiceImpl<UserGroup, Integer> implements UserGroupService {
+	
+	@Resource
+	UserGroupMapper userGroupMapper;
+	
+	
+	@Override
+	public UserGroup selectOne() {
+		// TODO Auto-generated method stub
+		List<UserGroup> list = userGroupMapper.selectByExampleByOne(null);
+		if(list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+	}
+
+
+
+	@Override
+	public List<UserGroup> selectByExampleAndPage(Page<UserGroup> page, UserGroupExample example) {
+		// TODO Auto-generated method stub
+		return userGroupMapper.selectByExampleAndPage(page, example);
+	}
+
+
+	@Override
+	public UserGroup selecByExampleByOne(UserGroupExample example) {
+		// TODO Auto-generated method stub
+		List<UserGroup> list = userGroupMapper.selectByExampleByOne(example);
+		if(list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+	}
+
+
+
+	@Override
+	public int insertSelective(UserGroup model) {
+		// TODO Auto-generated method stub
+		return userGroupMapper.insertSelective(model);
+	}
+
+
+
+	@Override
+	public GenericDao<UserGroup, Integer> getDao() {
+		// TODO Auto-generated method stub
+		return userGroupMapper;
+	}
+
+}
